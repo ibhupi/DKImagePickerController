@@ -207,7 +207,7 @@ open class DKImagePickerController : UINavigationController {
     public var didSelectAssets: ((_ assets: [DKAsset]) -> Void)?
 
     /// The callback block is executed when user long press on selected asset
-    public var didSelectAssetForPreview: ((_ asset: DKAsset) -> Void)?
+    public var didSelectAssetForPreview: ((_ asset: DKAsset, _ fromView: UIView) -> Void)?
 
     /// It will have selected the specific assets.
     public var defaultSelectedAssets: [DKAsset]? {
@@ -454,8 +454,8 @@ open class DKImagePickerController : UINavigationController {
         }
     }
     
-    internal func selectImageLongPress(_ asset: DKAsset) {
-        self.didSelectAssetForPreview?(asset)
+    internal func selectImageLongPress(_ asset: DKAsset, _ fromView: UIView) {
+        self.didSelectAssetForPreview?(asset, fromView)
     }
     
     internal func deselectImage(_ asset: DKAsset) {

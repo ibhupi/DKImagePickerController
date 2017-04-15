@@ -179,8 +179,11 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         if self.isCameraCell(indexPath: indexPath) {
             return
         }
-        if let selectedAsset = (collectionView.cellForItem(at: indexPath) as? DKAssetGroupDetailBaseCell)?.asset {
-            self.imagePickerController.selectImageLongPress(selectedAsset)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? DKAssetGroupDetailBaseCell else {
+            return
+        }
+        if let selectedAsset = cell.asset {
+            self.imagePickerController.selectImageLongPress(selectedAsset, cell)
         }
     }
 	
