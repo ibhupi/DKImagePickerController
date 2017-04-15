@@ -80,6 +80,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
 		
 		self.hidesCamera = self.imagePickerController.sourceType == .photo
 		self.checkPhotoPermission()
+        self.addLongPressGeusture()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -158,6 +159,29 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
     
     func isCameraCell(indexPath: IndexPath) -> Bool {
         return indexPath.row == 0 && !self.hidesCamera
+    }
+    
+    private func addLongPressGeusture() {
+        let longPressSelector = #selector(DKAssetGroupDetailVC.handleLongPress(gesture:))
+        let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: longPressSelector)
+        longPressGestureRecognizer.delaysTouchesBegan = true
+        self.collectionView.addGestureRecognizer(longPressGestureRecognizer)
+    }
+    
+    internal func handleLongPress(gesture : UILongPressGestureRecognizer) {
+        if gesture.state != .ended {
+            return
+        }
+        let point = gesture.location(in: self.collectionView)
+        guard let indexPath = self.collectionView.indexPathForItem(at: point) else {
+            return
+        }
+        if self.isCameraCell(indexPath: indexPath) {
+            return
+        }
+        if let selectedAsset = (collectionView.cellForItem(at: indexPath) as? DKAssetGroupDetailBaseCell)?.asset {
+            self.imagePickerController.selectImageLongPress(selectedAsset)
+        }
     }
 	
     // MARK: - Cells
