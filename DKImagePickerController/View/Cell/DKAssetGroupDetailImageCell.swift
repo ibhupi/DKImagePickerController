@@ -23,9 +23,8 @@ class DKAssetGroupDetailImageCell: DKAssetGroupDetailBaseCell {
         
         self.checkView.frame = self.bounds
         self.checkView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        self.checkView.checkImageView.tintColor = nil
         self.checkView.checkLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        self.checkView.checkLabel.textColor = UIColor.white
+        self.checkView.checkLabel.textColor = UIColor.black
         self.contentView.addSubview(self.checkView)
     }
     
@@ -35,23 +34,15 @@ class DKAssetGroupDetailImageCell: DKAssetGroupDetailBaseCell {
     
     class DKImageCheckView: UIView {
         
-        internal lazy var checkImageView: UIImageView = {
-            let imageView = UIImageView(image: DKImageResource.checkedImage().withRenderingMode(.alwaysTemplate))
-            return imageView
-        }()
-        
         internal lazy var checkLabel: UILabel = {
             let label = UILabel()
-            label.textAlignment = .right
-            
+            label.textAlignment = .left
+            label.autoresizingMask = [.flexibleLeftMargin, .flexibleWidth, .flexibleHeight, .flexibleBottomMargin]
             return label
         }()
         
         override init(frame: CGRect) {
             super.init(frame: frame)
-            
-            self.addSubview(checkImageView)
-            self.addSubview(checkLabel)
         }
         
         required init?(coder aDecoder: NSCoder) {
@@ -60,9 +51,30 @@ class DKAssetGroupDetailImageCell: DKAssetGroupDetailBaseCell {
         
         override func layoutSubviews() {
             super.layoutSubviews()
-            
-            self.checkImageView.frame = self.bounds
-            self.checkLabel.frame = CGRect(x: 0, y: 5, width: self.bounds.width - 5, height: 20)
+            if self.checkLabel.superview == nil && self.superview != nil {
+                checkLabel.translatesAutoresizingMaskIntoConstraints = false
+                self.addSubview(checkLabel)
+                self.addConstraint(NSLayoutConstraint(item: checkLabel,
+                                                      attribute: .rightMargin,
+                                                      relatedBy: .equal,
+                                                      toItem: self,
+                                                      attribute: .rightMargin,
+                                                      multiplier: 1,
+                                                      constant: 0))
+                self.addConstraint(NSLayoutConstraint(item: checkLabel,
+                                                      attribute: .topMargin,
+                                                      relatedBy: .equal,
+                                                      toItem: self,
+                                                      attribute: .topMargin,
+                                                      multiplier: 1,
+                                                      constant: 0))
+                let selectedColor = (self.window?.tintColor ?? UIColor.white).withAlphaComponent(0.9)
+                self.layer.borderColor = selectedColor.cgColor
+                self.layer.borderWidth = 3
+                checkLabel.backgroundColor = selectedColor
+                checkLabel.layer.cornerRadius = 2
+                checkLabel.layer.masksToBounds = true
+            }
         }
         
     } /* DKImageCheckView */
@@ -74,7 +86,7 @@ class DKAssetGroupDetailImageCell: DKAssetGroupDetailBaseCell {
     }
     override var index: Int {
         didSet {
-            self.checkView.checkLabel.text =  "\(self.index + 1)"
+            self.checkView.checkLabel.text =  " \(self.index + 1) "
         }
     }
     
