@@ -169,7 +169,7 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
     }
     
     internal func handleLongPress(gesture : UILongPressGestureRecognizer) {
-        if gesture.state != .ended {
+        if gesture.state != .began {
             return
         }
         let point = gesture.location(in: self.collectionView)
