@@ -102,7 +102,7 @@ class DKAssetGroupDetailImageCell: DKAssetGroupDetailBaseCell {
     
     override var isSelected: Bool {
         didSet {
-            checkView.isHidden = !super.isSelected
+            checkView.isHidden =  true// !super.isSelected
         }
     }
     
