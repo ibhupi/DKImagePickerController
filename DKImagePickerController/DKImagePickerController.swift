@@ -409,9 +409,9 @@ open class DKImagePickerController : UINavigationController {
     }
     
     open func done() {
-        self.presentingViewController?.dismiss(animated: true, completion: {
-            self.didSelectAssets?(self.selectedAssets)
-        })
+        self.didSelectAssets?(self.selectedAssets)
+//        self.presentingViewController?.dismiss(animated: true, completion: {
+//        })
     }
     
     // MARK: - Selection
