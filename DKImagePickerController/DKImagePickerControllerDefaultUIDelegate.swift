@@ -41,7 +41,7 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 	
 	open func prepareLayout(_ imagePickerController: DKImagePickerController, vc: UIViewController) {
 		self.imagePickerController = imagePickerController
-		vc.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.createDoneButtonIfNeeded())
+        self.updateDoneButton()
 	}
         
     open func imagePickerControllerCreateCamera(_ imagePickerController: DKImagePickerController) -> UIViewController {
@@ -122,7 +122,26 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 			granted ? setup() : cameraDenied()
 		}
 	}
-		
+    
+    private var singleSelect = false {
+        didSet {
+            self.updateDoneButton()
+        }
+    }
+    public func imagePickerContrller(_ imagePickerController: DKImagePickerController, singleSelect: Bool) {
+        self.singleSelect = singleSelect
+    }
+    
+    private func updateDoneButton() {
+        guard let vc = self.imagePickerController else {
+            return
+        }
+        if singleSelect {
+            vc.navigationItem.rightBarButtonItem = nil
+        } else {
+            vc.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: self.createDoneButtonIfNeeded())
+        }
+    }
 }
 
 @objc

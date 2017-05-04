@@ -95,6 +95,8 @@ public protocol DKImagePickerControllerUIDelegate {
     func imagePickerControllerCollectionCameraCell() -> DKAssetGroupDetailBaseCell.Type
     
     func imagePickerControllerCollectionVideoCell() -> DKAssetGroupDetailBaseCell.Type
+    
+    func imagePickerContrller(_ imagePickerController: DKImagePickerController, singleSelect: Bool)
 }
 
 /**
@@ -124,7 +126,11 @@ open class DKImagePickerController : UINavigationController {
     }()
     
     /// Forces selection of tapped image immediatly.
-    public var singleSelect = false
+    public var singleSelect = false {
+        didSet {
+            self.UIDelegate.imagePickerContrller(self, singleSelect: singleSelect)
+        }
+    }
     
     /// The maximum count of assets which the user will be able to select.
     public var maxSelectableCount = 999
