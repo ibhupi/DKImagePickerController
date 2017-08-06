@@ -18,7 +18,7 @@ open class DKAssetGroupGridLayout: UICollectionViewFlowLayout {
 			minItemWidth = 100
 		}
 		
-		let interval: CGFloat = 0
+		let interval: CGFloat = 1
 		self.minimumInteritemSpacing = interval
 		self.minimumLineSpacing = interval
 		

@@ -64,11 +64,13 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.darkGray
 		
 		let layout = self.imagePickerController.UIDelegate.layoutForImagePickerController(self.imagePickerController).init()
 		self.collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: layout)
         self.collectionView.backgroundColor = self.imagePickerController.UIDelegate.imagePickerControllerCollectionViewBackgroundColor()
         self.collectionView.allowsMultipleSelection = true
+        self.collectionView.contentInset = UIEdgeInsets(top: 1, left: 0, bottom: 1, right: 0)
 		self.collectionView.delegate = self
 		self.collectionView.dataSource = self
 		self.view.addSubview(self.collectionView)
@@ -264,6 +266,9 @@ internal class DKAssetGroupDetailVC: UIViewController, UICollectionViewDelegate,
         } else {
             cell = self.dequeueReusableCell(for: indexPath)
         }
+        
+        cell.layer.cornerRadius = 6
+        cell.layer.masksToBounds = true
         
         return cell
     }

@@ -89,7 +89,7 @@ open class DKImagePickerControllerDefaultUIDelegate: NSObject, DKImagePickerCont
 	}
     
     open func imagePickerControllerCollectionViewBackgroundColor() -> UIColor {
-        return UIColor.white
+        return UIColor.darkGray
     }
     
     open func imagePickerControllerCollectionImageCell() -> DKAssetGroupDetailBaseCell.Type {
